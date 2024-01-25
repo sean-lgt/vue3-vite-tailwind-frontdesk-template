@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { isMobileTerminal } from './utils/flexible'
+import { isMobileTerminal } from '@/utils/flexible'
 </script>
 
 <style scoped>
