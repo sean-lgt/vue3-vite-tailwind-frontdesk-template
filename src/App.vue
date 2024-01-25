@@ -1,20 +1,10 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import firstTailwind from './components/firstTailwind.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue bg-red-900" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-  <firstTailwind></firstTailwind>
+  <div>是否为移动端设备：{{ isMobileTerminal }}</div>
 </template>
+
+<script setup>
+import { isMobileTerminal } from './utils/flexible'
+</script>
 
 <style scoped>
 .logo {
