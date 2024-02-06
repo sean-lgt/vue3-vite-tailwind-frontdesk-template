@@ -6,7 +6,9 @@
 import { getCategoryApi } from '@/api/category.js'
 
 const fetchCategoryData = () => {
-  getCategoryApi()
+  getCategoryApi().then((res) => {
+    console.log('🚀【获取类别数据】', res)
+  })
 }
 fetchCategoryData()
 </script>

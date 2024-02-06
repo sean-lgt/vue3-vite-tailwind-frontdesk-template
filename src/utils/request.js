@@ -8,4 +8,25 @@ const service = axios.create({
   }
 })
 
+/**
+ * @description: 定义响应拦截器
+ * @return {*}
+ */
+service.interceptors.response.use(
+  (response) => {
+    const { success, message, data } = response.data
+    if (success) {
+      return data
+    } else {
+      // TODO: 业务错误处理
+      return Promise.reject(new Error(message))
+    }
+  },
+  (error) => {
+    console.log('🚀【出现错误】', error)
+    // TODO: 请求错误处理 此时HTTP状态不在 2xx 内
+    return Promise.reject(error)
+  }
+)
+
 export default service

@@ -13,8 +13,8 @@ export default defineConfig({
   server: {
     // 代理配置
     proxy: {
-      '/prod-api': {
-        target: 'https://imooc-front.lgdsunday.club/',
+      '/frontdesk/dev-api': {
+        target: 'http://127.0.0.1:3008/frontdesk/dev-api',
         changeOrigin: true
       }
     }
