@@ -3,7 +3,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from '@/router'
 import { useREM } from '@/utils/flexible.js'
+// 导入物料组件库
+import mLibs from './libs'
 import './styles/index.scss'
+// 注册 svg-icons
+import 'virtual:svg-icons-register'
 
 useREM()
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(mLibs).mount('#app')
