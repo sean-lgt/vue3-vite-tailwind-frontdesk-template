@@ -49,7 +49,7 @@ const currentCategoryIndex = ref(0)
 // 滑块样式
 const silderStyle = ref({
   transform: 'translateX(0px)',
-  width: '52px'
+  width: '46px'
 })
 
 // 获取填充的所有 item 元素
