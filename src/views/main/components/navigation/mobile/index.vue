@@ -33,10 +33,7 @@
     </ul>
 
     <m-popup v-model="isOpenPopup">
-      <div>153165165156</div>
-      <div>153165165156</div>
-      <div>153165165156</div>
-      <div>153165165156</div>
+      <Menu :data="props.data" @onItemClick="onItemClick"></Menu>
     </m-popup>
   </div>
 </template>
@@ -44,8 +41,9 @@
 <script setup>
 import { ref, watch, onBeforeUpdate } from 'vue'
 import { useScroll } from '@vueuse/core'
+import Menu from '@/views/main/components/menu/index.vue'
 
-defineProps({
+const props = defineProps({
   data: {
     type: Array,
     required: true
@@ -90,6 +88,7 @@ watch(currentCategoryIndex, (val) => {
 // 点击
 const onItemClick = (item, index) => {
   currentCategoryIndex.value = index
+  isOpenPopup.value = false
 }
 
 // popup 展示
