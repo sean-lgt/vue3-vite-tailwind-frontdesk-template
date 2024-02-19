@@ -7,6 +7,7 @@
       <!-- 汉堡按钮 -->
       <li
         class="z-20 fixed top-0 right-[-1px] h-4 px-1 flex items-center bg-white dark:bg-zinc-900 shadow-l-white dark:shadow-l-zinc"
+        @click="isOpenPopup = !isOpenPopup"
       >
         <m-svg-icon class="w-1.5 h-1.5" name="hamburger"></m-svg-icon>
       </li>
@@ -30,6 +31,13 @@
         {{ item.name }}
       </li>
     </ul>
+
+    <m-popup v-model="isOpenPopup">
+      <div>153165165156</div>
+      <div>153165165156</div>
+      <div>153165165156</div>
+      <div>153165165156</div>
+    </m-popup>
   </div>
 </template>
 
@@ -83,6 +91,9 @@ watch(currentCategoryIndex, (val) => {
 const onItemClick = (item, index) => {
   currentCategoryIndex.value = index
 }
+
+// popup 展示
+const isOpenPopup = ref(false)
 </script>
 
 <style lang="scss" scoped></style>
