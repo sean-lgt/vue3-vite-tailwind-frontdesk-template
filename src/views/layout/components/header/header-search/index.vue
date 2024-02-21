@@ -1,5 +1,7 @@
 <template>
-  <div>搜索块</div>
+  <div class="w-full">
+    <m-search></m-search>
+  </div>
 </template>
 
 <script setup></script>

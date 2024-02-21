@@ -1,5 +1,5 @@
 <template>
-  <div>主题切换</div>
+  <div>主题</div>
 </template>
 
 <script setup></script>
