@@ -25,6 +25,12 @@
         class="opacity-0 h-1.5 w-[1px] absolute translate-y-[-50%] top-[50%] right-[62px] bg-zinc-200 duration-500 group-hover:opacity-100"
       ></div>
       <!-- 搜索按钮 -->
+      <m-button
+        class="absolute translate-y-[-50%] top-[50%] right-1 rounded-xl duration-500"
+        icon="search"
+        iconColor="#ffffff"
+        @click="handleSearch"
+      ></m-button>
     </div>
     <!-- 下拉区 -->
     <transition name="slide">
@@ -37,6 +43,23 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+// 点击搜索
+const handleSearch = () => {}
+</script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.slide-enter-active {
+  transition: all 0.5s;
+}
+
+.slide-leave-active {
+  transition: all 0.5s;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(40px);
+  opacity: 0;
+}
+</style>
