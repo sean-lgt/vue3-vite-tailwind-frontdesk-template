@@ -1,5 +1,5 @@
 <template>
-  <div>main 主区域</div>
+  <router-view></router-view>
 </template>
 
 <script setup></script>
