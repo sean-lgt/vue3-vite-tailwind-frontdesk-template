@@ -19,7 +19,7 @@
       ></li>
 
       <li
-        v-for="(item, index) in data"
+        v-for="(item, index) in $store.getters.categorys"
         :key="item.id"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
         :class="{
@@ -33,7 +33,7 @@
     </ul>
 
     <m-popup v-model="isOpenPopup">
-      <Menu :data="props.data" @onItemClick="onItemClick"></Menu>
+      <Menu @onItemClick="onItemClick"></Menu>
     </m-popup>
   </div>
 </template>
@@ -44,10 +44,10 @@ import { useScroll } from '@vueuse/core'
 import Menu from '@/views/main/components/menu/index.vue'
 
 const props = defineProps({
-  data: {
-    type: Array,
-    required: true
-  }
+  // data: {
+  //   type: Array,
+  //   required: true
+  // }
 })
 
 const currentCategoryIndex = ref(0)
