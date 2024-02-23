@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  // 手动切换暗黑模式
+  darkMode: 'class',
   // 应用到 index 文件 src目录下的文件
   content: ['./index.html', './src/**/*.{vue,js}'],
   theme: {
