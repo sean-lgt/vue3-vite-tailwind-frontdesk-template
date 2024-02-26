@@ -12,6 +12,7 @@
         class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
         v-for="item in themeArr"
         :key="item.id"
+        @click="onItemClick(item)"
       >
         <m-svg-icon
           :name="item.icon"
@@ -27,8 +28,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import { THEME_CONFIG } from '@/constants'
+
+const store = useStore()
 
 const themeArr = [
   {
@@ -51,7 +55,18 @@ const themeArr = [
   }
 ]
 
-const svgIconName = ref(themeArr[0].icon)
+const svgIconName = computed(() => {
+  // 根据当前的 themeType 返回当前的选中 icon
+  const findTheme = themeArr.find((theme) => {
+    return theme.type === store.getters.themeType
+  })
+  return findTheme?.icon || themeArr[0].type
+})
+
+// 点击切换主题
+const onItemClick = (theme) => {
+  store.commit('theme/changeThemeType', theme.type)
+}
 </script>
 
 <style lang="scss" scoped></style>
