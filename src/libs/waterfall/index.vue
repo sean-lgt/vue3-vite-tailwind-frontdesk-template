@@ -30,6 +30,14 @@
 
 <script setup>
 import { ref, onMounted, computed, watch, nextTick, onUnmounted } from 'vue'
+import {
+  getImgElements,
+  getAllImg,
+  onComplateImgs,
+  getMinHeight,
+  getMaxHeight,
+  getMinHeightColumn
+} from './utils'
 
 const props = defineProps({
   // 数据源
@@ -129,6 +137,136 @@ onMounted(() => {
   // 计算列宽
   useColumnWidth()
   console.log('🚀【列宽计算】', columnWidth.value)
+})
+
+// item 高度集合
+let itemHeights = []
+
+/**
+ * @description: 监听图片加载完成
+ */
+const waitImgComplate = () => {
+  itemHeights = []
+  // 拿到所有元素
+  let itemElements = [...document.getElementsByClassName('m-waterfall-item')]
+  // 获取所有元素的 img 标签
+  const imgElements = getImgElements(itemElements)
+  // 获取所有 img 标签的图片
+  const allImgs = getAllImg(imgElements)
+  onComplateImgs(allImgs).then(() => {
+    // 图片加载完成，获取高度
+    itemElements.forEach((el) => {
+      itemHeights.push(el.offsetHeight)
+    })
+    // 渲染位置
+    useItemLocation()
+  })
+}
+
+/**
+ * @description: 图片不需要预加载时，计算 item 高度
+ * @return {*}
+ */
+const useItemHeight = () => {
+  itemHeights = []
+  // 拿到所有元素
+  let itemElements = [...document.getElementsByClassName('m-waterfall-item')]
+  // 计算 item 高度
+  itemElements.forEach((el) => {
+    // 依据传入数据计算出的 img 高度
+    itemHeights.push(el.offsetHeight)
+  })
+  // 渲染位置
+  useItemLocation()
+}
+
+/**
+ * @description: 为每个 item 生成位置属性
+ * @return {*}
+ */
+const useItemLocation = () => {
+  console.log('🚀【获取每个item高度】', itemHeights)
+  // 遍历数据源
+  props.data.forEach((item, index) => {
+    // 避免重复计算
+    if (item._style) {
+      return
+    }
+    // 生成 _style 属性
+    item._style = {}
+    // left
+    item._style.left = getItemLeft()
+    // top
+    item._style.top = getItemTop()
+    // 指定列高度自增
+    increasingHeight(index)
+  })
+
+  // 指定容器高度
+  containerHeight.value = getMaxHeight(columnHeightObj.value)
+}
+
+/**
+ * @description: 返回下一个 item 的 left
+ * @return {*}
+ */
+const getItemLeft = () => {
+  // 最小高度所在的列 * (列宽 + 间距)
+  const column = getMinHeightColumn(columnHeightObj.value)
+  return (
+    column * (columnWidth.value + props.columnSpacing) + containerLeft.value
+  )
+}
+
+/**
+ * @description: 返回下一个 item 的 top
+ * @return {*}
+ */
+const getItemTop = () => {
+  // 列高对象中的最小的高度
+  return getMinHeight(columnHeightObj.value)
+}
+
+/**
+ * @description: 指定列高度自增
+ */
+const increasingHeight = (index) => {
+  // 最小高度所在的列
+  const minHeightColumn = getMinHeightColumn(columnHeightObj.value)
+  // 该列高度自增
+  columnHeightObj.value[minHeightColumn] +=
+    itemHeights[index] + props.rowSpacing
+}
+
+// 触发计算位置
+watch(
+  () => props.data,
+  (newVal) => {
+    // 重置数据源
+    const resetColumnHeight = newVal.every((item) => !item._style)
+    if (resetColumnHeight) {
+      // 构建高度记录容器
+      useColumnHeightObj()
+    }
+    nextTick(() => {
+      if (props.picturePreReading) {
+        waitImgComplate()
+      } else {
+        useItemHeight()
+      }
+    })
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+)
+
+// 在组件销毁时，清除所有的 _style
+onUnmounted(() => {
+  props.data.forEach((item) => {
+    delete item._style
+  })
 })
 </script>
 
