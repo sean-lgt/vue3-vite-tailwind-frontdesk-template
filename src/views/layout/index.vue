@@ -1,7 +1,9 @@
 <template>
   <div class="h-screen">
     <headerComponent class="h-header"></headerComponent>
-    <mainComponent class="h-main"></mainComponent>
+    <div class="h-main">
+      <mainComponent></mainComponent>
+    </div>
     <floating></floating>
   </div>
 </template>
