@@ -1,10 +1,15 @@
 <template>
   <div>
-    <list-item
-      v-for="(item, index) in pexelsList"
-      :key="item.id"
-      :data="item"
-    ></list-item>
+    <m-waterfall
+      :data="pexelsList"
+      :nodeKey="'id'"
+      :column="5"
+      :picturePreReading="true"
+    >
+      <template v-slot="{ item, width }">
+        <list-item :data="item"></list-item>
+      </template>
+    </m-waterfall>
   </div>
 </template>
 
