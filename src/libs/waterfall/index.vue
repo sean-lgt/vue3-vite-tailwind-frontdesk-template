@@ -262,6 +262,34 @@ watch(
   }
 )
 
+/**
+ * @description: 监听列数变化，重新构建瀑布流
+ * @return {*}
+ */
+const reset = () => {
+  setTimeout(() => {
+    // 重新计算列宽
+    useColumnWidth()
+    // 重置所有的定位数据，因为 data 中进行了深度监听，所以该操作会触发 data 的 watch
+    props.data.forEach((item) => {
+      item._style = null
+    })
+  }, 100)
+}
+watch(
+  () => props.column,
+  () => {
+    if (props.picturePreReading) {
+      // 在 picturePreReading 为 true 的前提下，需要首先为列宽滞空，列宽滞空之后，会取消瀑布流渲染
+      columnWidth.value = 0
+      // 等待页面渲染之后，重新执行计算。否则在 item 没有指定过高度的前提下，计算出的 item 高度会不正确
+      nextTick(reset)
+    } else {
+      reset()
+    }
+  }
+)
+
 // 在组件销毁时，清除所有的 _style
 onUnmounted(() => {
   props.data.forEach((item) => {
