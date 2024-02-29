@@ -74,3 +74,6 @@ export const THEME_CONFIG = {
   DARK: 'dark',
   SYSTEM: 'system'
 }
+
+// 瀑布流是否开启图片预加载 如果数据已经有图片宽高返回则不需要预加载
+export const IS_OPEN_PICTURE_PRE_READING = false

@@ -20,6 +20,7 @@
         v-for="(item, index) in data"
         :key="nodeKey ? item[nodeKey] : index"
       >
+        <!-- 插槽作用域提供每项信息 每项计算出来的宽度，可用于按比例计算高度 -->
         <slot :item="item" :width="columnWidth" :index="index" />
       </div>
     </template>
@@ -274,7 +275,7 @@ const reset = () => {
     props.data.forEach((item) => {
       item._style = null
     })
-  }, 100)
+  }, 150)
 }
 watch(
   () => props.column,

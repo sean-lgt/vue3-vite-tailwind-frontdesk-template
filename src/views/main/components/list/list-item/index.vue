@@ -2,7 +2,17 @@
   <div class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 rounded pb-1">
     <div class="relative w-full rounded cursor-zoom-in group">
       <!-- 图片 -->
-      <img class="w-full rounded bg-transparent" :src="data.photo" />
+      <img
+        class="w-full rounded bg-transparent"
+        :src="data.photo"
+        v-if="isOpenPicturePreReading"
+      />
+      <img
+        v-if="!isOpenPicturePreReading"
+        class="w-full rounded bg-transparent"
+        :src="data.photo"
+        :style="{ height: (width / data.photoWidth) * data.photoHeight + 'px' }"
+      />
       <!-- 遮罩层 -->
       <div
         class="hidden opacity-0 w-full h-full bg-zinc-900/50 absolute top-0 left-0 rounded duration-300 group-hover:opacity-100 xl:block"
@@ -47,12 +57,20 @@
 </template>
 
 <script setup>
+import { IS_OPEN_PICTURE_PRE_READING } from '@/constants/index.js'
+
 defineProps({
   data: {
     type: Object,
     required: true
+  },
+  width: {
+    type: Number
   }
 })
+
+// 是否使用图片预加载 如果数据中有返回图片的宽高，则不需要预加载也可以计算高度
+const isOpenPicturePreReading = IS_OPEN_PICTURE_PRE_READING
 </script>
 
 <style lang="scss" scoped></style>

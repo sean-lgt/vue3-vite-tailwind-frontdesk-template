@@ -4,11 +4,11 @@
       :data="pexelsList"
       :nodeKey="'id'"
       :column="isMobileTerminal ? 2 : 5"
-      :picturePreReading="true"
+      :picturePreReading="isOpenPicturePreReading"
       class="w-full px-1"
     >
       <template v-slot="{ item, width }">
-        <list-item :data="item"></list-item>
+        <list-item :data="item" :width="width"></list-item>
       </template>
     </m-waterfall>
   </div>
@@ -19,6 +19,9 @@ import { ref } from 'vue'
 import listItem from './list-item/index.vue'
 import { getPexlesListApi } from '@/api/pexels.js'
 import { isMobileTerminal } from '@/utils/flexible.js'
+import { IS_OPEN_PICTURE_PRE_READING } from '@/constants/index.js'
+
+const isOpenPicturePreReading = IS_OPEN_PICTURE_PRE_READING
 
 let listQuery = {
   page: 1,
