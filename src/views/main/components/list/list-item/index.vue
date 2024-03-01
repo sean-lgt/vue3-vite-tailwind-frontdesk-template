@@ -3,11 +3,13 @@
     <div class="relative w-full rounded cursor-zoom-in group">
       <!-- 图片 -->
       <img
+        v-lazy
         class="w-full rounded bg-transparent"
         :src="data.photo"
         v-if="isOpenPicturePreReading"
       />
       <img
+        v-lazy
         v-if="!isOpenPicturePreReading"
         class="w-full rounded bg-transparent"
         :src="data.photo"
