@@ -62,6 +62,16 @@ const emitLoad = () => {
     emits('onLoad')
   }
 }
+
+/**
+ * 监听 loading 的变化，解决数据加载完成后，首屏未铺满的问题
+ */
+watch(loading, (val) => {
+  // 触发 load，延迟处理，等待 渲染和 useIntersectionObserver 的再次触发
+  setTimeout(() => {
+    emitLoad()
+  }, 150)
+})
 </script>
 
 <style lang="scss" scoped></style>
