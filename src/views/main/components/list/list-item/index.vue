@@ -1,6 +1,9 @@
 <template>
   <div class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 rounded pb-1">
-    <div class="relative w-full rounded cursor-zoom-in group">
+    <div
+      class="relative w-full rounded cursor-zoom-in group"
+      :style="{ backgroundColor: createRandomRGB() }"
+    >
       <!-- 图片 -->
       <img
         v-lazy
@@ -45,21 +48,22 @@
           iconClass="fill-bg-zinc-900 dark:fill-bg-zinc-900"
         ></m-button>
       </div>
-      <!-- 标题 -->
-      <p class="text-sm mt-1 font-bold text-zinc-900 dark:text-zinc-300 px-1">
-        {{ data.title }}
-      </p>
-      <!-- 作者 -->
-      <div class="flex items-center mt-1 px-1">
-        <img class="h-2 w-2 rounded-full" :src="data.avatar" />
-        <span class="text-sm text-zinc-500 ml-1">{{ data.author }}</span>
-      </div>
+    </div>
+    <!-- 标题 -->
+    <p class="text-sm mt-1 font-bold text-zinc-900 dark:text-zinc-300 px-1">
+      {{ data.title }}
+    </p>
+    <!-- 作者 -->
+    <div class="flex items-center mt-1 px-1">
+      <img class="h-2 w-2 rounded-full" :src="data.avatar" />
+      <span class="text-sm text-zinc-500 ml-1">{{ data.author }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
 import { IS_OPEN_PICTURE_PRE_READING } from '@/constants/index.js'
+import { createRandomRGB } from '@/utils/color.js'
 
 defineProps({
   data: {
