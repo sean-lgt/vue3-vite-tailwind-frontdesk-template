@@ -7,3 +7,11 @@ export const getPexlesListApi = (data = {}) => {
     params: data
   })
 }
+
+// 获取搜索提示列表
+export const getPexlesSearchHintApi = (data = {}) => {
+  return request({
+    url: '/pexels/hint',
+    params: data
+  })
+}
