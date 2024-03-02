@@ -31,6 +31,7 @@
 
 <script>
 import { computed } from 'vue'
+import mSvgIcon from '../svg-icon/index.vue'
 
 // type 可选项：表示按钮风格
 const typeEnum = {
