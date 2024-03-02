@@ -14,6 +14,8 @@
             @itemClick="onClickSearchItem"
             v-show="!searchValue"
           ></search-history>
+          <!-- 推荐主题 -->
+          <search-theme v-show="!searchValue"></search-theme>
         </div>
       </template>
     </m-search>
@@ -25,6 +27,7 @@ import { ref } from 'vue'
 import { useStore } from 'vuex'
 import searchHint from './search-hint/index.vue'
 import searchHistory from './search-history/index.vue'
+import searchTheme from './search-theme/index.vue'
 
 const store = useStore()
 

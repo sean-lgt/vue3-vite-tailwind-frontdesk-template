@@ -15,3 +15,11 @@ export const getPexlesSearchHintApi = (data = {}) => {
     params: data
   })
 }
+
+// 获取推荐主题
+export const getPexlesRecommendThemeApi = (data = {}) => {
+  return request({
+    url: '/pexels/themes',
+    params: data
+  })
+}
