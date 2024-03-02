@@ -66,6 +66,7 @@
 import { saveAs } from 'file-saver'
 import { IS_OPEN_PICTURE_PRE_READING } from '@/constants/index.js'
 import { createRandomRGB } from '@/utils/color.js'
+import { message } from '@/libs/index.js'
 
 const props = defineProps({
   data: {
@@ -82,7 +83,10 @@ const isOpenPicturePreReading = IS_OPEN_PICTURE_PRE_READING
 
 // 点击下载图片
 const onDownload = () => {
-  saveAs(props.data.photoDownLink)
+  message('success', '图片开始下载')
+  setTimeout(() => {
+    saveAs(props.data.photoDownLink)
+  }, 500)
 }
 </script>
 
