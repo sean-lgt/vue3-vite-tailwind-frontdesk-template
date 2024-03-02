@@ -23,10 +23,10 @@
         :key="item.id"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
         :class="{
-          'text-zinc-100 ': currentCategoryIndex === index
+          'text-zinc-100 ': $store.getters.currentCategoryIndex === index
         }"
         :ref="setItemRef"
-        @click="onItemClick(item, index)"
+        @click="onItemClick(item)"
       >
         {{ item.name }}
       </li>
@@ -40,8 +40,11 @@
 
 <script setup>
 import { ref, watch, onBeforeUpdate } from 'vue'
+import { useStore } from 'vuex'
 import { useScroll } from '@vueuse/core'
 import Menu from '@/views/main/components/menu/index.vue'
+
+const store = useStore()
 
 const props = defineProps({
   // data: {
@@ -49,8 +52,6 @@ const props = defineProps({
   //   required: true
   // }
 })
-
-const currentCategoryIndex = ref(0)
 
 // 滑块样式
 const silderStyle = ref({
@@ -74,20 +75,24 @@ onBeforeUpdate(() => {
 // 获取 ul 元素，计算偏移位置
 const ulTarget = ref(null)
 const { x: ulScrollLeft } = useScroll(ulTarget)
-watch(currentCategoryIndex, (val) => {
-  // 获取选中元素的 left/width
-  const { left, width } = itemRefs[val].getBoundingClientRect()
-  // 设置滑块的位置和宽度
-  silderStyle.value = {
-    // ul横向滚动位置 + 当前元素的left - 内边距
-    transform: `translateX(${ulScrollLeft.value + left - 10}px)`,
-    width: `${width}px`
+// fix 监听 getters 时需要传递的是一个函数
+watch(
+  () => store.getters.currentCategoryIndex,
+  (val) => {
+    // 获取选中元素的 left/width
+    const { left, width } = itemRefs[val].getBoundingClientRect()
+    // 设置滑块的位置和宽度
+    silderStyle.value = {
+      // ul横向滚动位置 + 当前元素的left - 内边距
+      transform: `translateX(${ulScrollLeft.value + left - 10}px)`,
+      width: `${width}px`
+    }
   }
-})
+)
 
 // 点击
-const onItemClick = (item, index) => {
-  currentCategoryIndex.value = index
+const onItemClick = (item) => {
+  store.commit('app/setCurrentCategory', item)
   isOpenPopup.value = false
 }
 

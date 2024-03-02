@@ -21,11 +21,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useStore } from 'vuex'
 import listItem from './list-item/index.vue'
 import { getPexlesListApi } from '@/api/pexels.js'
 import { isMobileTerminal } from '@/utils/flexible.js'
 import { IS_OPEN_PICTURE_PRE_READING } from '@/constants/index.js'
+
+const store = useStore()
 
 const isOpenPicturePreReading = IS_OPEN_PICTURE_PRE_READING
 
@@ -63,6 +66,26 @@ const getPexlesData = async () => {
   // 修改 loading 标记
   loading.value = false
 }
+
+// 重置查询对象
+const resetListQuery = (newQuery) => {
+  listQuery = { ...listQuery, ...newQuery }
+  // 重置状态
+  isFinished.value = false
+  pexelsList.value = []
+}
+
+// 监听 currentCategory 的变化
+watch(
+  () => store.getters.currentCategory,
+  (currentCategory) => {
+    // 重置请求参数
+    resetListQuery({
+      page: 1,
+      categoryId: currentCategory.id
+    })
+  }
+)
 </script>
 
 <style lang="scss" scoped></style>

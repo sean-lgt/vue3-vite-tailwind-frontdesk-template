@@ -24,9 +24,9 @@
         class="shrink-0 px-1.5 py-0 z-10 duration-200 last:mr-4 text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-300 text-base font-bold h-4 leading-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-900 rounded mr-1 mb-1"
         :class="{
           'text-zinc-900  dark:text-zinc-300 bg-zinc-200 dark:bg-zinc-900 ':
-            currentCategoryIndex === index
+            $store.getters.currentCategoryIndex === index
         }"
-        @click="onItemClick(item, index)"
+        @click="onItemClick(item)"
       >
         {{ item.name }}
       </li>
@@ -36,6 +36,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
 
 // 展开状态
 const isOpenCategoty = ref(false)
@@ -43,9 +46,8 @@ const triggerState = () => {
   isOpenCategoty.value = !isOpenCategoty.value
 }
 
-const currentCategoryIndex = ref(0)
-const onItemClick = (item, index) => {
-  currentCategoryIndex.value = index
+const onItemClick = (item) => {
+  store.commit('app/setCurrentCategory', item)
 }
 </script>
 
