@@ -41,7 +41,7 @@ const onClickSearchItem = (val) => {
     store.commit('search/addHistory', val)
     console.log('触发 searchText 变化')
     // 触发 searchText 变化
-    // store.commit('app/changeSearchText', val)
+    store.commit('app/setSearchText', val)
   }
 }
 </script>
