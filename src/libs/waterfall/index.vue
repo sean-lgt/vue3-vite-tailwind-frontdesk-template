@@ -44,7 +44,10 @@ const props = defineProps({
   // 数据源
   data: {
     type: Array,
-    required: true
+    required: true,
+    default: () => {
+      return []
+    }
   },
   // 唯一标识的 key
   nodeKey: {
@@ -100,7 +103,7 @@ const containerLeft = ref(0)
  * @return {*}
  */
 const useContainerWidth = () => {
-  console.log('🚀【容器计算】', getComputedStyle(containerTarget.value, null))
+  // console.log('🚀【容器计算】', getComputedStyle(containerTarget.value, null))
   const { paddingLeft, paddingRight } = getComputedStyle(
     containerTarget.value,
     null
@@ -186,7 +189,7 @@ const useItemHeight = () => {
  * @return {*}
  */
 const useItemLocation = () => {
-  console.log('🚀【获取每个item高度】', itemHeights)
+  // console.log('🚀【获取每个item高度】', itemHeights)
   // 遍历数据源
   props.data.forEach((item, index) => {
     // 避免重复计算
