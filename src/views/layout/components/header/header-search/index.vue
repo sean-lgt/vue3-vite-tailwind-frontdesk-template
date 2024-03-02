@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <m-search v-model="searchValue">
+    <m-search v-model="searchValue" @search="onClickSearchItem">
       <template #dropdown>
         <div>
           <!-- 搜索提示 -->
@@ -9,6 +9,11 @@
             @itemClick="onClickSearchItem"
             v-show="searchValue"
           ></search-hint>
+          <!-- 最近搜索 -->
+          <search-history
+            @itemClick="onClickSearchItem"
+            v-show="!searchValue"
+          ></search-history>
         </div>
       </template>
     </m-search>
@@ -17,13 +22,24 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
 import searchHint from './search-hint/index.vue'
+import searchHistory from './search-history/index.vue'
+
+const store = useStore()
 
 const searchValue = ref('')
 
 // 点击搜索回调
-const onClickSearchItem = (item) => {
-  console.log('🚀【点击搜索回调】', item)
+const onClickSearchItem = (val) => {
+  searchValue.value = val
+  if (val) {
+    // 保存历史记录
+    store.commit('search/addHistory', val)
+    console.log('触发 searchText 变化')
+    // 触发 searchText 变化
+    // store.commit('app/changeSearchText', val)
+  }
 }
 </script>
 
