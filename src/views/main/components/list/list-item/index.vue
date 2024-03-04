@@ -7,12 +7,14 @@
       <!-- 图片 -->
       <img
         v-lazy
+        ref="imgTarget"
         class="w-full rounded bg-transparent"
         :src="data.photo"
         v-if="isOpenPicturePreReading"
       />
       <img
         v-lazy
+        ref="imgTarget"
         v-if="!isOpenPicturePreReading"
         class="w-full rounded bg-transparent"
         :src="data.photo"
@@ -47,6 +49,7 @@
           icon="full"
           size="small"
           iconClass="fill-bg-zinc-900 dark:fill-bg-zinc-900"
+          @click="onImgFullScreen"
         ></m-button>
       </div>
     </div>
@@ -63,7 +66,9 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { saveAs } from 'file-saver'
+import { useFullscreen } from '@vueuse/core'
 import { IS_OPEN_PICTURE_PRE_READING } from '@/constants/index.js'
 import { createRandomRGB } from '@/utils/color.js'
 import { message } from '@/libs/index.js'
@@ -88,6 +93,12 @@ const onDownload = () => {
     saveAs(props.data.photoDownLink)
   }, 500)
 }
+
+// 图片元素
+const imgTarget = ref(null)
+
+// 生成全屏方法
+const { enter: onImgFullScreen } = useFullscreen(imgTarget)
 </script>
 
 <style lang="scss" scoped></style>
