@@ -43,8 +43,28 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import { driver } from 'driver.js'
+import 'driver.js/dist/driver.css'
+import steps from './steps'
+
+// 初始化引导页插件
+let driverObj = null
+onMounted(() => {
+  driverObj = driver({
+    // 禁止点击蒙版关闭
+    allowClose: false,
+    nextBtnText: '下一个',
+    prevBtnText: '上一个',
+    doneBtnText: '完成',
+    steps: steps
+  })
+})
+
 // 开始引导
-const onGuideClick = () => {}
+const onGuideClick = () => {
+  driverObj.drive()
+}
 
 // 反馈处理
 const onToFeedback = () => {}
