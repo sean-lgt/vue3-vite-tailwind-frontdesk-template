@@ -3,6 +3,7 @@
     <div
       class="relative w-full rounded cursor-zoom-in group"
       :style="{ backgroundColor: createRandomRGB() }"
+      @click="onToPinsClick"
     >
       <!-- 图片 -->
       <img
@@ -83,6 +84,8 @@ const props = defineProps({
   }
 })
 
+const emits = defineEmits(['click'])
+
 // 是否使用图片预加载 如果数据中有返回图片的宽高，则不需要预加载也可以计算高度
 const isOpenPicturePreReading = IS_OPEN_PICTURE_PRE_READING
 
@@ -99,6 +102,13 @@ const imgTarget = ref(null)
 
 // 生成全屏方法
 const { enter: onImgFullScreen } = useFullscreen(imgTarget)
+
+// 点击进入详情
+const onToPinsClick = () => {
+  emits('click', {
+    id: props.data.id
+  })
+}
 </script>
 
 <style lang="scss" scoped></style>

@@ -13,7 +13,7 @@
         class="w-full px-1"
       >
         <template v-slot="{ item, width }">
-          <list-item :data="item" :width="width"></list-item>
+          <list-item :data="item" :width="width" @click="onToPins"></list-item>
         </template>
       </m-waterfall>
     </m-infinite-list>
@@ -98,6 +98,13 @@ watch(
     })
   }
 )
+
+// 进入 pins
+const onToPins = (item) => {
+  console.log('🚀【拿到item】', item)
+  // 主动介入浏览器堆栈管理  修改浏览器的url
+  history.pushState(null, null, `/pins/${item.id}`)
+}
 </script>
 
 <style lang="scss" scoped></style>
