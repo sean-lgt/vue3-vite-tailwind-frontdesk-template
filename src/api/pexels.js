@@ -23,3 +23,10 @@ export const getPexlesRecommendThemeApi = (data = {}) => {
     params: data
   })
 }
+
+// 获取图片详细数据
+export const getPexlesDetailById = (id) => {
+  return request({
+    url: `/pexels/${id}`
+  })
+}
