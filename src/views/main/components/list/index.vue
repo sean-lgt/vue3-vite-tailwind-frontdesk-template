@@ -17,13 +17,26 @@
         </template>
       </m-waterfall>
     </m-infinite-list>
+
+    <!-- 大图详情处理 -->
+    <transition
+      :css="false"
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @leave="leave"
+    >
+      <pins v-if="isVisiblePins" :id="currentPins.id" />
+    </transition>
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
 import { useStore } from 'vuex'
+import { useEventListener } from '@vueuse/core'
+import gsap from 'gsap'
 import listItem from './list-item/index.vue'
+import pins from '@/views/pins/components/pins/index.vue'
 import { getPexlesListApi } from '@/api/pexels.js'
 import { isMobileTerminal } from '@/utils/flexible.js'
 import { IS_OPEN_PICTURE_PRE_READING } from '@/constants/index.js'
@@ -99,11 +112,60 @@ watch(
   }
 )
 
+// 控制 pins 展示
+const isVisiblePins = ref(false)
+// 当前选中的 pins 属性
+const currentPins = ref({})
+
 // 进入 pins
 const onToPins = (item) => {
-  console.log('🚀【拿到item】', item)
+  console.log('🚀【拿到item,包含中心点的位置】', item)
   // 主动介入浏览器堆栈管理  修改浏览器的url
   history.pushState(null, null, `/pins/${item.id}`)
+  isVisiblePins.value = true
+  currentPins.value = item
+}
+
+// 监听浏览器后退按钮事件
+useEventListener(window, 'popstate', () => {
+  isVisiblePins.value = false
+})
+
+// 进入动画开始前
+const beforeEnter = (el) => {
+  gsap.set(el, {
+    scaleX: 0,
+    scaleY: 0,
+    transformOrigin: '0 0',
+    translateX: currentPins.value.localtion?.translateX,
+    translateY: currentPins.value.localtion?.translateY,
+    opacity: 0
+  })
+}
+
+// 进入动画执行中
+const enter = (el, done) => {
+  gsap.to(el, {
+    duration: 0.3,
+    scaleX: 1,
+    scaleY: 1,
+    opacity: 1,
+    translateX: 0,
+    translateY: 0,
+    onComplete: done
+  })
+}
+
+// 离开动画执行中
+const leave = (el, done) => {
+  gsap.to(el, {
+    duration: 0.3,
+    scaleX: 0,
+    scaleY: 0,
+    x: currentPins.value.localtion?.translateX,
+    y: currentPins.value.localtion?.translateY,
+    opacity: 0
+  })
 }
 </script>
 
