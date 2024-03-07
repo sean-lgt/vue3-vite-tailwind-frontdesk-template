@@ -133,6 +133,7 @@ useEventListener(window, 'popstate', () => {
 
 // 进入动画开始前
 const beforeEnter = (el) => {
+  console.log('🚀【asdagsaassd4646】', el)
   gsap.set(el, {
     scaleX: 0,
     scaleY: 0,
