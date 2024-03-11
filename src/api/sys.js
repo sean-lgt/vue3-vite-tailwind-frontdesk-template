@@ -9,10 +9,20 @@ export const checkSilerCaptchaApi = (data = {}) => {
   })
 }
 
+// 用户登录
 export const userLoginApi = (data = {}) => {
   return request({
     url: '/sys/login',
     method: 'POST',
+    data: data
+  })
+}
+
+// 获取登录用户个人信息
+export const userProfileApi = (data = {}) => {
+  return request({
+    url: '/user/profile',
+
     data: data
   })
 }

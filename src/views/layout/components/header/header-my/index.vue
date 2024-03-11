@@ -2,12 +2,12 @@
   <m-popover class="guide-my flex items-center" placement="bottom-left">
     <template #reference>
       <div
-        v-if="false"
+        v-if="$store.getters.token"
         class="relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
       >
         <img
           class="w-3 h-3 rounded-sm"
-          src="https://file.ipadown.com/tophub/assets/images/media/mp.weixin.qq.com.png_160x160.png"
+          :src="$store.getters.userInfo.avatar || ''"
         />
         <m-svg-icon
           class="h-1.5 w-1.5 ml-0.5"
@@ -15,6 +15,7 @@
           fillClass="fill-zinc-900 dark:fill-zinc-300"
         ></m-svg-icon>
         <m-svg-icon
+          v-if="$store.getters.userInfo.vipLevel"
           class="h-1.5 w-1.5 absolute right-[16px] bottom-0"
           name="vip"
           fillClass="fill-zinc-900"
@@ -29,7 +30,7 @@
         ></m-button>
       </div>
     </template>
-    <div v-if="false" class="w-[140px] overflow-hidden p-1">
+    <div v-if="$store.getters.token" class="w-[140px] overflow-hidden p-1">
       <div
         class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
         v-for="item in menuArr"
