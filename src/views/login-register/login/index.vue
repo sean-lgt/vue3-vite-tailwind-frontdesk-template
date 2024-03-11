@@ -66,6 +66,11 @@
         <login-weixin></login-weixin>
       </div>
     </div>
+    <slider-captcha
+      v-if="isSliderCaptchaVisible"
+      @close="isSliderCaptchaVisible = false"
+      @success="onCaptchaSuccess"
+    ></slider-captcha>
   </div>
 </template>
 
@@ -74,6 +79,7 @@ import { ref } from 'vue'
 import loginHeader from '../components/login-header/index.vue'
 import loginQq from '../components/login-qq/index.vue'
 import loginWeixin from '../components/login-weixin/index.vue'
+import sliderCaptcha from '../components/slider-captcha/index.vue'
 import {
   Form as VeeForm,
   Field as VeeField,
@@ -89,9 +95,25 @@ const loginForm = ref({
   password: ''
 })
 
+// 控制 sliderCaptcha 展示
+const isSliderCaptchaVisible = ref(false)
+
 // 点击登录操作
 const onLoginHandler = () => {
   console.log('🚀【点击进行登录】')
+  isSliderCaptchaVisible.value = true
+}
+
+// 人类行为验证通过
+const onCaptchaSuccess = async () => {
+  isSliderCaptchaVisible.value = false
+  // 登录操作
+  onLogin()
+}
+
+// 执行登录逻辑
+const onLogin = () => {
+  console.log('🚀【人类行为校验通过 可以登录】')
 }
 
 // 点击前往注册页
