@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_REQUEST_URL,
@@ -7,6 +8,24 @@ const service = axios.create({
     icode: import.meta.env.VITE_REQUEST_CODE
   }
 })
+
+/**
+ * @description: 定义请求拦截器
+ * @return {*}
+ */
+service.interceptors.request.use(
+  (config) => {
+    // config.headers.icode = '你需要在这里填入你的 icode'
+    if (store.getters.token) {
+      // 如果token存在 注入token
+      config.headers.Authorization = `Bearer ${store.getters.token}`
+    }
+    return config // 必须返回配置
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 /**
  * @description: 定义响应拦截器

@@ -35,6 +35,7 @@
         class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
         v-for="item in menuArr"
         :key="item.id"
+        @click="onItemClick(item.path)"
       >
         <m-svg-icon
           :name="item.icon"
@@ -51,8 +52,11 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { confirm } from '@/libs/index.js'
 
 const router = useRouter()
+const store = useStore()
 
 const menuArr = [
   {
@@ -78,6 +82,17 @@ const menuArr = [
 // 跳转进入登录
 const navToLogin = () => {
   router.push('/login')
+}
+
+// menu item 点击事件
+const onItemClick = (path) => {
+  if (!path) {
+    // 无路径则为退出登录
+    confirm('您确定要退出登录吗？').then(() => {
+      // 退出登录不存在跳转路径
+      store.dispatch('user/logout')
+    })
+  }
 }
 </script>
 
