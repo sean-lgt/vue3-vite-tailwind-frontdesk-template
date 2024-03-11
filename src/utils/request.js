@@ -1,5 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
+import { message as $message } from '@/libs'
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_REQUEST_URL,
@@ -43,6 +44,16 @@ service.interceptors.response.use(
   },
   (error) => {
     console.log('🚀【出现错误】', error)
+    // 处理 token 超时问题
+    if (
+      error.response &&
+      error.response.data &&
+      error.response.data.code === 401
+    ) {
+      // token超时
+      store.dispatch('user/logout')
+    }
+    $message('error', error.response.data.message || '未知错误')
     // TODO: 请求错误处理 此时HTTP状态不在 2xx 内
     return Promise.reject(error)
   }
