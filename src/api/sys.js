@@ -8,3 +8,11 @@ export const checkSilerCaptchaApi = (data = {}) => {
     data: data
   })
 }
+
+export const userLoginApi = (data = {}) => {
+  return request({
+    url: '/sys/login',
+    method: 'POST',
+    data: data
+  })
+}

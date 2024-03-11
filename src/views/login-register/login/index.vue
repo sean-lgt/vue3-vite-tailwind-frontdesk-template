@@ -76,6 +76,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import loginHeader from '../components/login-header/index.vue'
 import loginQq from '../components/login-qq/index.vue'
 import loginWeixin from '../components/login-weixin/index.vue'
@@ -86,13 +88,17 @@ import {
   ErrorMessage as VeeErrorMessage
 } from 'vee-validate'
 import { validateUsername, validatePassword } from './validate.js'
+import { LOGIN_TYPE } from '@/constants/index.js'
+
+const router = useRouter()
+const store = useStore()
 
 // 登录时的 loading
 const loading = ref(false)
 // 用户输入的用户名和密码
 const loginForm = ref({
-  username: '',
-  password: ''
+  username: 'sean123',
+  password: '123456'
 })
 
 // 控制 sliderCaptcha 展示
@@ -112,8 +118,20 @@ const onCaptchaSuccess = async () => {
 }
 
 // 执行登录逻辑
-const onLogin = () => {
+const onLogin = async () => {
   console.log('🚀【人类行为校验通过 可以登录】')
+  loading.value = true
+  // 执行登录操作
+  try {
+    await store.dispatch('user/login', {
+      ...loginForm.value,
+      loginType: LOGIN_TYPE.USERNAME
+    })
+  } finally {
+    loading.value = false
+  }
+  // 跳转回首页
+  router.push('/')
 }
 
 // 点击前往注册页
