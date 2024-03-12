@@ -137,6 +137,8 @@ const onLogin = async () => {
 // 点击前往注册页
 const onToRegister = () => {
   console.log('🚀【点击前往注册】')
+  // 前往注册
+  router.push('/register')
 }
 </script>
 

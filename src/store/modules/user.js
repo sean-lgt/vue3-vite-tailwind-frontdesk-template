@@ -1,5 +1,5 @@
 import md5 from 'md5'
-import { userLoginApi, userProfileApi } from '@/api/sys.js'
+import { userLoginApi, userProfileApi, userRegisterApi } from '@/api/sys.js'
 import { message } from '@/libs/index.js'
 
 export default {
@@ -52,6 +52,15 @@ export default {
       commit('setUserInfo', {})
       // 退出登录之后，重新刷新下页面，因为对于前台项目而言，用户是否登录（是否为 VIP）看到的数据可能不同
       location.reload()
+    },
+    // 注册
+    async register({ commit }, payload) {
+      const { password } = payload
+      const resInfo = await userRegisterApi({
+        ...payload,
+        password: password ? md5(password) : ''
+      })
+      console.log('🚀【注册成功】', resInfo)
     }
   }
 }

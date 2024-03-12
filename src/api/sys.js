@@ -26,3 +26,12 @@ export const userProfileApi = (data = {}) => {
     data: data
   })
 }
+
+// 注册
+export const userRegisterApi = (data = {}) => {
+  return request({
+    url: '/sys/register',
+    method: 'POST',
+    data: data
+  })
+}
