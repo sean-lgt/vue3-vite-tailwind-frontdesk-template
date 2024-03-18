@@ -12,6 +12,8 @@ import 'virtual:svg-icons-register'
 import { useTheme } from '@/utils/theme'
 // 注册自定义指令
 import directives from './directives/index.js'
+// 权限控制
+import './permission.js'
 
 // 设置rem
 useREM()
