@@ -1,6 +1,7 @@
 <template>
   <div
     class="h-full overflow-auto bg-white dark:bg-zinc-800 duration-500 scrollbar-thin scrollbar-thumb-transparent xl:scrollbar-thumb-zinc-200 xl:dark:scrollbar-thumb-zinc-900 scrollbar-track-transparent"
+    ref="mainContainerTarget"
   >
     <navigation />
     <div class="max-w-screen-xl mx-auto relative m-1 xl:mt-4">
@@ -45,8 +46,10 @@ export default {
 </script>
 
 <script setup>
+import { ref, onActivated } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { useScroll } from '@vueuse/core'
 import navigation from './components/navigation/index.vue'
 import list from './components/list/index.vue'
 import { isMobileTerminal } from '@/utils/flexible.js'
@@ -71,6 +74,17 @@ const onMyClick = () => {
     router.push('/login')
   }
 }
+
+// 记录页面滚动位置
+const mainContainerTarget = ref(null)
+const { y: containerTargetScrollY } = useScroll(mainContainerTarget)
+// 被缓存的组件再次可见，会回调 onActivated 方法
+onActivated(() => {
+  if (!mainContainerTarget.value) {
+    return
+  }
+  mainContainerTarget.value.scrollTop = containerTargetScrollY.value
+})
 </script>
 
 <style lang="scss" scoped></style>
