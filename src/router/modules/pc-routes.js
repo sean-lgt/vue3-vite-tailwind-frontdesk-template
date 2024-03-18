@@ -13,6 +13,14 @@ export default [
         path: '/pins/:id',
         name: 'pins',
         component: () => import('@/views/pins/index.vue')
+      },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: () => import('@/views/profile/index.vue'),
+        meta: {
+          user: true
+        }
       }
     ]
   },

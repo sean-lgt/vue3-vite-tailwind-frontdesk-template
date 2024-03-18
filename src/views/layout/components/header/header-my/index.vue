@@ -63,7 +63,7 @@ const menuArr = [
     id: 0,
     title: '个人资料',
     icon: 'profile',
-    path: '/'
+    path: '/profile'
   },
   {
     id: 1,
@@ -86,6 +86,13 @@ const navToLogin = () => {
 
 // menu item 点击事件
 const onItemClick = (path) => {
+  // 有路径则进行路径跳转
+  if (path) {
+    // 配置跳转方式
+    // store.commit('app/changeRouterType', 'push')
+    router.push(path)
+    return
+  }
   if (!path) {
     // 无路径则为退出登录
     confirm('您确定要退出登录吗？').then(() => {

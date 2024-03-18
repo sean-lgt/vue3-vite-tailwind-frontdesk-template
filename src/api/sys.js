@@ -35,3 +35,12 @@ export const userRegisterApi = (data = {}) => {
     data: data
   })
 }
+
+// 修改用户信息
+export const updateUserInfoApi = (data = {}) => {
+  return request({
+    url: '/user/update',
+    method: 'PUT',
+    data: data
+  })
+}
