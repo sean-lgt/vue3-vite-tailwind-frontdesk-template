@@ -48,6 +48,9 @@ const props = defineProps({
       }
       return result
     }
+  },
+  max: {
+    type: [String, Number]
   }
 })
 

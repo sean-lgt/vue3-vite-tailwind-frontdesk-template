@@ -38,6 +38,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'home'
+}
+</script>
+
 <script setup>
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
@@ -49,12 +55,16 @@ const store = useStore()
 const router = useRouter()
 
 // 跳转vip
-const onVipClick = () => {}
+const onVipClick = () => {
+  // 配置跳转方式
+  store.commit('app/changeRouterType', 'push')
+}
 
 // 跳转我的
 const onMyClick = () => {
   // 配置跳转方式
-  // store.commit('app/changeRouterType', 'push')
+  store.commit('app/changeRouterType', 'push')
+
   if (store.getters.token) {
     router.push('/profile')
   } else {

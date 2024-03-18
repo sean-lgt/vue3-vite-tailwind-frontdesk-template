@@ -211,10 +211,18 @@ const onChangeProfile = async () => {
 }
 
 // 移动端处理后退
-const onNavbarLeftClick = () => {}
+const onNavbarLeftClick = () => {
+  // 配置跳转方式
+  store.commit('app/changeRouterType', 'back')
+  router.back()
+}
 
 // 移动端处理退出登录
-const onLogoutClick = () => {}
+const onLogoutClick = () => {
+  confirm('确定要退出登录吗？').then(() => {
+    store.dispatch('user/logout')
+  })
+}
 </script>
 
 <style lang="scss" scoped></style>
