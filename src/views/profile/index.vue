@@ -132,19 +132,69 @@
         </m-button>
       </div>
     </div>
+    <!-- PC 端 -->
+    <m-dialog v-if="!isMobileTerminal" v-model="isDialogVisible">
+      <change-avatar
+        :blob="currentBolb"
+        @close="isDialogVisible = false"
+      ></change-avatar>
+    </m-dialog>
+    <!-- 移动端 -->
+    <m-popup
+      v-else
+      :class="{ 'h-screen': isDialogVisible }"
+      v-model="isDialogVisible"
+    >
+      <change-avatar
+        :blob="currentBolb"
+        @close="isDialogVisible = false"
+      ></change-avatar>
+    </m-popup>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { isMobileTerminal } from '@/utils/flexible.js'
 import { message, confirm } from '@/libs/index.js'
 import { updateUserInfoApi } from '@/api/sys.js'
+import changeAvatar from './components/change-avatar/index.vue'
 
 const router = useRouter()
 const store = useStore()
+
+// 上传图片隐藏域
+const inputFileTarget = ref(null)
+// 头像 dialog 的展示
+const isDialogVisible = ref(false)
+// 选中的图片
+const currentBolb = ref('')
+
+// 更换头像点击事件
+const onAvatarClick = () => {
+  inputFileTarget.value.click()
+}
+// 头像选择之后的回调
+const onSelectImgHandler = () => {
+  // 获取选中的文件
+  const imgFile = inputFileTarget.value.files[0]
+  // 生成 blob 对象
+  const blob = URL.createObjectURL(imgFile)
+  // 获取选中的图片
+  currentBolb.value = blob
+  // 显示
+  isDialogVisible.value = true
+}
+
+// 监听 dialog 关闭
+watch(isDialogVisible, (val) => {
+  if (!val) {
+    // 防止 change 不重复触发
+    inputFileTarget.value.value = null
+  }
+})
 
 // 数据本地的双向同步,增加一个单层深拷贝
 const userInfo = ref({ ...store.getters.userInfo })
