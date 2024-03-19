@@ -30,10 +30,17 @@
           ></pay-menu-item>
         </div>
         <p class="mt-1 text-sm text-zinc-500">{{ currentPayData.desc }}</p>
+        <payment class="mt-4" :payData="currentPayData" />
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'member'
+}
+</script>
 
 <script setup>
 import { ref, watch } from 'vue'
@@ -41,6 +48,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { isMobileTerminal } from '@/utils/flexible.js'
 import payMenuItem from './components/pay-menu-item/index.vue'
+import payment from './components/payment/index.vue'
 import { getVipPayListApi } from '@/api/pay.js'
 
 const router = useRouter()
