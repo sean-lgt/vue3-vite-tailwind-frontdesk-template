@@ -137,6 +137,8 @@ const onLogin = async () => {
 // 点击前往注册页
 const onToRegister = () => {
   console.log('🚀【点击前往注册】')
+  // 配置跳转方式
+  store.commit('app/changeRouterType', 'push')
   // 前往注册
   router.push('/register')
 }

@@ -81,6 +81,8 @@ const menuArr = [
 
 // 跳转进入登录
 const navToLogin = () => {
+  // 配置跳转方式
+  store.commit('app/changeRouterType', 'push')
   router.push('/login')
 }
 
@@ -89,7 +91,7 @@ const onItemClick = (path) => {
   // 有路径则进行路径跳转
   if (path) {
     // 配置跳转方式
-    // store.commit('app/changeRouterType', 'push')
+    store.commit('app/changeRouterType', 'push')
     router.push(path)
     return
   }

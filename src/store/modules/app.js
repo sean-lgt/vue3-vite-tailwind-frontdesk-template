@@ -10,7 +10,9 @@ export default {
       // 当前选中的分类
       currentCategory: ALL_CATEGORY_ITEM,
       // 搜索文本
-      searchText: ''
+      searchText: '',
+      // 路由跳转类型
+      routerType: 'none'
     }
   },
   mutations: {
@@ -21,6 +23,10 @@ export default {
     // 设置搜索文本
     setSearchText(state, payload) {
       state.searchText = payload
+    },
+    // 修改路由类型
+    changeRouterType(state, payload) {
+      state.routerType = payload
     }
   },
   actions: {}

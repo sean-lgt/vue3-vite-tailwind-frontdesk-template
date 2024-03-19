@@ -1,3 +1,5 @@
+import { isMobileTerminal } from '@/utils/flexible.js'
+
 export default {
   categorys: (state) => state.category.categorys,
   // 当前主题
@@ -17,5 +19,13 @@ export default {
   // 用户登录的token
   token: (state) => state.user.token,
   // 用户登录信息
-  userInfo: (state) => state.user.userInfo
+  userInfo: (state) => state.user.userInfo,
+  // 路由跳转方式
+  routerType: (state) => {
+    // 在 PC 端下，永远为 none
+    if (!isMobileTerminal.value) {
+      return 'none'
+    }
+    return state.app.routerType
+  }
 }
