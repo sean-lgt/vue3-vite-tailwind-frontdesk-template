@@ -84,3 +84,6 @@ export const LOGIN_TYPE = {
   QQ: 'QQ',
   WX: 'WX'
 }
+
+// 兔小巢反馈地址
+export const TU_FEEDBACK_URL = 'https://support.qq.com/product/1221'

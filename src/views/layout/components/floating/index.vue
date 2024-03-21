@@ -47,6 +47,7 @@ import { ref, onMounted } from 'vue'
 import { driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
 import steps from './steps'
+import { TU_FEEDBACK_URL } from '@/constants/index.js'
 
 // 初始化引导页插件
 let driverObj = null
@@ -67,7 +68,10 @@ const onGuideClick = () => {
 }
 
 // 反馈处理
-const onToFeedback = () => {}
+const onToFeedback = () => {
+  // 打开兔小巢反馈平台
+  window.open(TU_FEEDBACK_URL)
+}
 </script>
 
 <style lang="scss" scoped></style>
